@@ -22,7 +22,7 @@ go.work
 
 # Personal
 main
-subscriber_admin_api
+admin_api
 ./DS_Store
 .idea
 *.log
