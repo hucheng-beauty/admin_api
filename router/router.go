@@ -18,6 +18,7 @@ func HealthCheck(r *gin.Engine) {
 }
 
 func Account(r *gin.Engine) {
+	//test
 	g := r.Group("/account")
 
 	var system account.Account
