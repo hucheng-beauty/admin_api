@@ -4,7 +4,7 @@ port: 8088
 mysql_info:
   endpoint: 127.0.0.1
   username: root
-  password: root
+  password: 111111
   database: admin_api
 jwt:
   key: 9&!B1gycDA0IulqRC&kE

@@ -48,7 +48,7 @@ func (j Object) Value() (driver.Value, error) {
 }
 
 type BaseModel struct {
-	Id        int            `gorm:"primarykey;comment:主键id;not null" json:"id"`
+	Id        string         `gorm:"primarykey;comment:主键id;not null" json:"id"`
 	CreatedAt time.Time      `gorm:"type:timestamp with time zone;comment:创建时间,带时区;not null" json:"created_at"`
 	UpdatedAt time.Time      `gorm:"type:timestamp with time zone;comment:修改时间,带时区;not null" json:"updated_at"`
 	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`
