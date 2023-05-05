@@ -3,6 +3,7 @@ package data
 import (
 	"admin_api/internal/model"
 	"gorm.io/gorm"
+	"time"
 )
 
 type UserRepo struct {
@@ -56,6 +57,21 @@ func (u *UserRepo) Detail(user *model.User) (*model.User, error) {
 	tx = tx.First(&uu)
 	if tx.Error != nil {
 		return nil, tx.Error
+	}
+	return uu, nil
+}
+
+func (u *UserRepo) UpdatePassword(user *model.User) (*model.User, error) {
+	uu := &model.User{
+		BaseModel: model.BaseModel{
+			UpdatedAt: time.Now().Local(),
+		},
+		Password: user.Password,
+	}
+	//更新数据库中密码
+	r := u.db.Where("id = ?", user.Id).Updates(&uu)
+	if r.Error != nil {
+		return nil, r.Error
 	}
 	return uu, nil
 }

@@ -32,3 +32,8 @@ type GetUserDetail struct {
 type GetUserById struct {
 	Id string `json:"id"`
 }
+
+type UpdatePassword struct {
+	Password string `json:"password" binding:"required"`
+	Id       string `json:"id"`
+}

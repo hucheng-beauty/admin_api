@@ -127,5 +127,48 @@ func (u *Account) GetUserDetail(c *gin.Context) {
 }
 
 func (Account) UpdatePassword(c *gin.Context) {
+	req := &request.UpdatePassword{}
+	if err := c.ShouldBind(&req); err != nil {
+		fmt.Println(1)
+		c.JSON(http.StatusOK, response.Error(1, err.Error()))
+		return
+	}
 
+	//判断id
+	userId, IsExists := c.Get("user_id")
+	if !IsExists {
+		fmt.Println(2)
+		c.JSON(http.StatusOK, response.Error(1, errors.New("获取用户Id失败").Error()))
+		return
+	}
+	uid, ok := userId.(string)
+	if !ok {
+		fmt.Println(3)
+		c.JSON(http.StatusOK, response.Error(1, errors.New("内部错误").Error()))
+		return
+	} else {
+		req.Id = uid
+	}
+
+	us := account.NewUserService(data.NewUserRepo(global.DB))
+	//获取用户细节
+	uu, err := us.GetUserById(&request.GetUserById{Id: req.Id})
+	if err != nil {
+		fmt.Println(4)
+		c.JSON(http.StatusOK, response.Error(1, errors.New("内部错误").Error()))
+		return
+	}
+
+	//更新密码(加密)
+	req.Password = password.Generate(req.Password)
+
+	_, err = us.UpdatePassword(req)
+	if err != nil {
+		fmt.Println(5)
+		c.JSON(http.StatusOK, response.Error(1, err.Error()))
+		return
+	}
+
+	c.JSON(http.StatusOK, response.NewResponse(gin.H{"id": uu.Id}))
+	return
 }

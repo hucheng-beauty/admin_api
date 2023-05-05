@@ -15,6 +15,7 @@ type Repo interface {
 	Save(*model.User) (*model.User, error)
 	IsExist(id string, username string) bool
 	Detail(user *model.User) (*model.User, error)
+	UpdatePassword(*model.User) (*model.User, error)
 }
 
 type User struct {
@@ -125,4 +126,16 @@ func (u *User) GetUserById(req *request.GetUserById) (*response.GetUserById, err
 		Captcha:       user.Captcha,
 		CreatedAt:     user.CreatedAt.Local().Format("2006-01-02 15:04:05"),
 	}, nil
+}
+
+func (u *User) UpdatePassword(req *request.UpdatePassword) (*response.UpdatePassword, error) {
+	uu, err := u.repo.UpdatePassword(&model.User{
+		BaseModel: model.BaseModel{Id: req.Id},
+		Password:  req.Password,
+	})
+	if err != nil {
+		zap.S().Errorf("%+#v\n", err)
+		return nil, errors.New("修改密码失败")
+	}
+	return &response.UpdatePassword{Id: uu.Id}, nil
 }
