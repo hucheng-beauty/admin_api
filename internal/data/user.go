@@ -41,3 +41,21 @@ func (u *UserRepo) Save(user *model.User) (*model.User, error) {
 	r := u.db.Create(&user)
 	return user, r.Error
 }
+
+func (u *UserRepo) Detail(user *model.User) (*model.User, error) {
+	var uu *model.User
+	tx := u.db.Model(&uu)
+
+	if user.BaseModel.Id != "" {
+		tx = tx.Where("id = ?", user.BaseModel.Id)
+	}
+	if user.UserName != "" {
+		tx = tx.Where("user_name = ?", user.UserName)
+	}
+
+	tx = tx.First(&uu)
+	if tx.Error != nil {
+		return nil, tx.Error
+	}
+	return uu, nil
+}
