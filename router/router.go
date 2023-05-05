@@ -2,6 +2,7 @@ package router
 
 import (
 	"admin_api/internal/api/account"
+	"admin_api/internal/api/financial"
 	"net/http"
 
 	"admin_api/middlewares"
@@ -26,4 +27,9 @@ func Account(r *gin.Engine) {
 	g.POST("/password_login", system.PasswordLogin)
 	g.GET("/user_info", JWT(), system.GetUserDetail)
 	g.PUT("/password", JWT(), system.UpdatePassword)
+
+	var financial financial.Financial
+	g.PUT("/amount_create", JWT(), financial.CreateUserAmount)
+	g.GET("/user_amount", JWT(), financial.GetUserAmount)
+	//	g.GET("/user_trade", JWT(), financial.DescribeUserTrade)
 }

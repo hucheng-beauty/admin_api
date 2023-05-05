@@ -29,3 +29,12 @@ func (j File) Value() (driver.Value, error) {
 	bs, err := json.Marshal(j)
 	return bs, err
 }
+
+// 用户钱包
+type Wallet struct {
+	BaseModel
+	UserId        string `gorm:"user_id;primarykey;type:uuid;comment:用户Id"`
+	Amount        int    `gorm:"amount;comment:总金额,单位分"`
+	UsableBalance int    `gorm:"usable_balance;comment:可用余额,单位分"`
+	FrozenAmount  int    `gorm:"frozen_amount;comment:冻结金额,单位分"`
+}

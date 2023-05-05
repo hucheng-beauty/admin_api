@@ -37,3 +37,15 @@ type UpdatePassword struct {
 	Password string `json:"password" binding:"required"`
 	Id       string `json:"id"`
 }
+
+// 具体查询页码和判断条件
+type DescribeUserTrade struct {
+	Pagination
+	FilterString
+	UserId string
+}
+
+// FilterString example: `name eq 'hello' and age eq 18`
+type FilterString struct {
+	Filter string `json:"filter"`
+}

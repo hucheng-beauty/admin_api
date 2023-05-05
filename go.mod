@@ -7,7 +7,9 @@ require (
 	github.com/anaskhan96/go-password-encoder v0.0.0-20201010210601-c765b799fd72
 	github.com/form3tech-oss/jwt-go v3.2.5+incompatible
 	github.com/gin-gonic/gin v1.9.0
+	github.com/go-playground/assert/v2 v2.2.0
 	github.com/gofrs/uuid v4.0.0+incompatible
+	github.com/pkg/errors v0.9.1
 	github.com/spf13/viper v1.15.0
 	go.uber.org/zap v1.21.0
 	gorm.io/driver/mysql v1.5.0

@@ -2,6 +2,7 @@ package data
 
 import (
 	"admin_api/internal/model"
+	"github.com/pkg/errors"
 	"gorm.io/gorm"
 	"time"
 )
@@ -74,4 +75,30 @@ func (u *UserRepo) UpdatePassword(user *model.User) (*model.User, error) {
 		return nil, r.Error
 	}
 	return uu, nil
+}
+
+type Wallet struct {
+	db *gorm.DB
+}
+
+func NewWalletService(db *gorm.DB) *Wallet {
+	return &Wallet{db: db}
+}
+
+func (w *Wallet) Detail(wallet *model.Wallet) (*model.Wallet, error) {
+	var ww *model.Wallet
+
+	tx := w.db.Model(model.Wallet{}).Where("user_id = ?", wallet.UserId).First(&ww)
+	if tx.Error != nil {
+		if tx.Error == gorm.ErrRecordNotFound {
+			return nil, nil
+		}
+		return nil, errors.Wrap(tx.Error, "original error")
+	}
+	return ww, nil
+}
+
+func (w *Wallet) Save(wallet *model.Wallet) (*model.Wallet, error) {
+	r := w.db.Create(&wallet)
+	return wallet, r.Error
 }

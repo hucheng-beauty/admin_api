@@ -43,3 +43,22 @@ type GetUserDetail struct {
 	Subject       string `json:"subject"`
 	CreatedAt     string `json:"created_at" `
 }
+
+type GetUserAmount struct {
+	UserId        string `json:"user_id"`
+	Amount        int    `json:"amount"`
+	UsableBalance int    `json:"usable_balance"`
+	FrozenAmount  int    `json:"frozen_amount"`
+}
+
+type GetAmountId struct {
+	Userid string `json:"Amount_id"`
+}
+
+type DescribeUserTrade struct {
+	TradeId     string `json:"trade_id"`
+	TradeType   string `json:"trade_type"`
+	TradeAmount int    `json:"trade_amount"`
+	CreatedAt   string `json:"created_at"`
+	Remark      string `json:"remark"`
+}
