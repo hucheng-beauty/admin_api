@@ -48,3 +48,7 @@ func (c CreateMarketingCampaignRequest) ToModel() (*model.MarketingCampaign, []*
 
 	return mr, cbs
 }
+
+type StateReq struct {
+	State model.State `json:"state"`
+}

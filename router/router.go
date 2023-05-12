@@ -42,4 +42,5 @@ func MarCampaign(r *gin.Engine) {
 	g.GET("", gin_handler.Query(mcApi.List))
 
 	g.GET("/:id", gin_handler.Query(mcApi.Detail))
+	g.PUT("/:id/state", gin_handler.JSON(mcApi.UpdateState))
 }

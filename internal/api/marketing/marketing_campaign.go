@@ -99,3 +99,36 @@ func (c MarketingCampaignApi) Detail(ctx *gin.Context, _ *request.Empty, out *re
 	*out = *res
 	return nil
 }
+
+// 修改活动状态
+func (c MarketingCampaignApi) UpdateState(ctx *gin.Context, in *request.StateReq, out *model.MarketingCampaign) error {
+	id := ctx.Param("id")
+	fmt.Println(id, in.State)
+	if id == `` || in.State == 0 {
+		return fmt.Errorf("the id and state should not nil")
+	}
+
+	//找到marketing_campaign id
+	mc, err := NewMarCampaignService().MarCampaignById(id)
+	if err != nil {
+		return err
+	}
+	if mc == nil {
+		return fmt.Errorf("not found MarCampaignById %s", id)
+	}
+	if mc.State == in.State {
+		return nil
+	}
+	mc.State = in.State
+
+	_, err = NewMarCampaignService().SetCampaignState(id, in.State)
+	if err != nil {
+		return err
+	}
+
+	if in.State == model.Stop {
+		go publish.WithMarketingCampaignStop(ctx, mc)
+	}
+	*out = *mc
+	return nil
+}
