@@ -4,10 +4,12 @@ import (
 	"admin_api/global"
 	"admin_api/internal/data"
 	"admin_api/internal/event/publish"
+	"admin_api/internal/model"
 	"admin_api/internal/request"
 	"admin_api/internal/response"
 	marService "admin_api/internal/service/store/marketing_campaign"
 	"admin_api/middlewares"
+	"admin_api/utils"
 	"github.com/gin-gonic/gin"
 	"time"
 )
@@ -53,5 +55,24 @@ func (c MarketingCampaignApi) Create(ctx *gin.Context, in *request.CreateMarketi
 	//////
 	go publish.WithMarketingCampaignCreate(ctx, res)
 	out.Id = res.Id
+	return nil
+}
+
+// 活动列表
+func (c MarketingCampaignApi) List(ctx *gin.Context, in *request.Query, out *response.MarketingCampaignListResponse) error {
+	if err := in.Validate(); err != nil {
+		return err
+	}
+	userId := middlewares.GetUserId(ctx)
+	var m = &model.MarketingCampaign{
+		UserId: userId,
+	}
+	res, count, err := NewMarCampaignService().MarCampaignWithPage(m, in)
+	if err != nil {
+		return err
+	}
+	utils.TotalCount(ctx, count)
+	out.Data = res
+	out.TotalCount = count
 	return nil
 }

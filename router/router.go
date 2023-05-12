@@ -39,5 +39,5 @@ func MarCampaign(r *gin.Engine) {
 	g := r.Group("/mar_campaigns", JWT())
 	var mcApi marketing.MarketingCampaignApi
 	g.POST("", gin_handler.JSON(mcApi.Create))
-	//g.GET("", gin_handler.Query(mcApi.List))
+	g.GET("", gin_handler.Query(mcApi.List))
 }

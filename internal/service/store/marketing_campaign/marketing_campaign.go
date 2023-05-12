@@ -132,3 +132,7 @@ func (s *MarCampaignService) UpdateMarCampaignCouponSurplusNumber(id string, suc
 	}
 	return s.mcr.UpdateSurplusNumberById(id, successCount)
 }
+
+func (s *MarCampaignService) MarCampaignWithPage(mr *model.MarketingCampaign, query *request.Query) ([]*model.MarketingCampaign, int, error) {
+	return s.mcr.FilterWithPage(mr, query)
+}

@@ -2,11 +2,13 @@ package marketing_campaign
 
 import (
 	"admin_api/internal/model"
+	"admin_api/internal/request"
 )
 
 type MarCampaignRepo interface {
 	Create(*model.MarketingCampaign) error
 	FindById(id string) (*model.MarketingCampaign, error)
+	FilterWithPage(mr *model.MarketingCampaign, query *request.Query) ([]*model.MarketingCampaign, int, error)
 	UpdateStateById(id string, state model.State) error
 	UpdateSurplusNumberById(id string, successCount int) error
 }
