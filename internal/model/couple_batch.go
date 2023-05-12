@@ -10,6 +10,10 @@ type CouponBatch struct {
 	StockId             string `json:"stock_id"  gorm:"type:varchar;comment:第三方批次Id"` // 批次Id
 }
 
+func (CouponBatch) TableName() string {
+	return "coupon_batch"
+}
+
 type CouponBatchBaseInfo struct {
 	Bin               StrSlice `gorm:"type:json;comment:银行卡json数组" json:"bin"`
 	LimitPay          int64    `json:"limit_pay" gorm:"type:smallint;comment:支付方式"`

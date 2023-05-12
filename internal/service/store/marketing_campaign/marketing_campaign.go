@@ -3,6 +3,7 @@ package marketing_campaign
 import (
 	"admin_api/internal/model"
 	"admin_api/internal/request"
+	"admin_api/internal/response"
 	"admin_api/pkg/uuid"
 	"admin_api/utils"
 
@@ -135,4 +136,42 @@ func (s *MarCampaignService) UpdateMarCampaignCouponSurplusNumber(id string, suc
 
 func (s *MarCampaignService) MarCampaignWithPage(mr *model.MarketingCampaign, query *request.Query) ([]*model.MarketingCampaign, int, error) {
 	return s.mcr.FilterWithPage(mr, query)
+}
+
+func (s *MarCampaignService) Detail(id string) (out *response.MarketingCampaignResponse, err error) {
+	out = &response.MarketingCampaignResponse{}
+	if id == `` {
+		return nil, fmt.Errorf("the id should not nil")
+	}
+	//查找活动id
+	mc, err := s.MarCampaignById(id)
+	if err != nil {
+		return nil, err
+	}
+	if mc == nil {
+		return nil, fmt.Errorf("not found MarCampaignById:%s ", id)
+	}
+	//卷批次
+	cbs, err := s.CouponBatchByMarId(id)
+	if err != nil {
+		return nil, err
+	}
+	// 券批次所用的模板
+	tMap, err := s.CouponBatchTemplates2Map(cbs)
+	if err != nil {
+		return nil, err
+	}
+	// 券批次日志
+	lMap, err := s.CouponLogsByMarCampaignId2CouponBatchIdMap(id)
+	if err != nil {
+		return nil, err
+	}
+	// 活动状态日志
+	cl, err := s.MarketingCampaignLogsByMarCampaignId(id)
+	if err != nil {
+		return nil, err
+	}
+	out.Model2Resp(mc, cbs, tMap, lMap, cl)
+
+	return out, nil
 }

@@ -33,3 +33,23 @@ func (s *MarCampaignService) CreateCouponLog(marCampaignId string, state model.S
 
 	return s.clr.Create(cts)
 }
+
+// 券批次日志Map {"template_id": template}
+func (s *MarCampaignService) CouponLogsByMarCampaignId2CouponBatchIdMap(marCampaignId string) (map[string][]*model.CouponLog, error) {
+
+	var mp = map[string][]*model.CouponLog{}
+
+	res, err := s.CouponLogsByMarCampaignId(marCampaignId)
+	if err != nil {
+		return nil, err
+	}
+	for _, item := range res {
+		mp[item.CouponBatchId] = append(mp[item.CouponBatchId], item)
+	}
+
+	return mp, nil
+}
+
+func (s *MarCampaignService) CouponLogsByMarCampaignId(marCampaignId string) ([]*model.CouponLog, error) {
+	return s.clr.List(&model.CouponLog{MarketingCampaignId: marCampaignId})
+}

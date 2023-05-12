@@ -40,4 +40,6 @@ func MarCampaign(r *gin.Engine) {
 	var mcApi marketing.MarketingCampaignApi
 	g.POST("", gin_handler.JSON(mcApi.Create))
 	g.GET("", gin_handler.Query(mcApi.List))
+
+	g.GET("/:id", gin_handler.Query(mcApi.Detail))
 }

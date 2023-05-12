@@ -10,6 +10,7 @@ import (
 	marService "admin_api/internal/service/store/marketing_campaign"
 	"admin_api/middlewares"
 	"admin_api/utils"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"time"
 )
@@ -74,5 +75,27 @@ func (c MarketingCampaignApi) List(ctx *gin.Context, in *request.Query, out *res
 	utils.TotalCount(ctx, count)
 	out.Data = res
 	out.TotalCount = count
+	return nil
+}
+
+// 活动列表
+func (c MarketingCampaignApi) Detail(ctx *gin.Context, _ *request.Empty, out *response.MarketingCampaignResponse) error {
+	id := ctx.Param("id")
+	if id == `` {
+		return fmt.Errorf("the id should not nil")
+	}
+	//查找活动id相关所有信息 卷批次 卷模板 卷日志 活动状态日志
+	res, err := NewMarCampaignService().Detail(id)
+	if err != nil {
+		return err
+	}
+	//查询流水
+	trades, err := NewTradeService().TradesByCampaignId(id)
+	if err != nil {
+		return err
+	}
+	//设置响应信息
+	res.SetTradeModel2Resp(trades)
+	*out = *res
 	return nil
 }

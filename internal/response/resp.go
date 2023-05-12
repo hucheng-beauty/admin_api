@@ -1,5 +1,7 @@
 package response
 
+import "admin_api/internal/model"
+
 type CreateUser struct {
 	Id string `json:"id"`
 }
@@ -61,4 +63,17 @@ type DescribeUserTrade struct {
 	TradeAmount int    `json:"trade_amount"`
 	CreatedAt   string `json:"created_at"`
 	Remark      string `json:"remark"`
+}
+
+func (d *DescribeUserTrade) ModelToResp(trade *model.Trade) *DescribeUserTrade {
+	c := d
+	if c == nil {
+		c = new(DescribeUserTrade)
+	}
+	c.TradeId = trade.TradeId
+	c.TradeType = trade.TradeType
+	c.TradeAmount = trade.TradeAmount
+	c.Remark = trade.Remark
+	c.CreatedAt = trade.CreatedAt.Local().Format("2006-01-02 15:04:05")
+	return c
 }

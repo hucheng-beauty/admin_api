@@ -25,10 +25,12 @@ type CouponTemplateRepo interface {
 
 type CouponLogRepo interface {
 	Create([]*model.CouponLog) error
+	List(*model.CouponLog) ([]*model.CouponLog, error)
 }
 
 type MarCampaignLogRepo interface {
 	Create(log *model.MarketingCampaignLog) error
+	List(log *model.MarketingCampaignLog) ([]*model.MarketingCampaignLog, error)
 }
 
 type MarCampaignService struct {

@@ -6,6 +6,8 @@ import (
 	"time"
 )
 
+type Empty struct{}
+
 type CreateCouponBatchReq struct {
 	model.CouponBatchBaseInfo
 	Comment string `json:"comment"`

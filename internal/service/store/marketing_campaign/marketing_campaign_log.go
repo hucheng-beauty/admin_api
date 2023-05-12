@@ -10,3 +10,9 @@ func (s *MarCampaignService) CreateMarketingCampaignLogWithModel(m *model.Market
 	//保存记录
 	return s.mclr.Create(log)
 }
+
+// 活动状态日志
+func (s *MarCampaignService) MarketingCampaignLogsByMarCampaignId(marCampaignId string) ([]*model.MarketingCampaignLog, error) {
+
+	return s.mclr.List(&model.MarketingCampaignLog{MarketingCampaignId: marCampaignId})
+}
