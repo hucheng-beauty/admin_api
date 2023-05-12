@@ -102,3 +102,19 @@ func (w *Wallet) Save(wallet *model.Wallet) (*model.Wallet, error) {
 	r := w.db.Create(&wallet)
 	return wallet, r.Error
 }
+
+func (w *Wallet) CheckId(id string) (bool, error) {
+	var a int64
+	w.db.Model(model.Wallet{}).Where("user_id=?", id).Count(&a)
+	if a == 0 {
+		return false, nil
+	}
+	return true, nil
+}
+
+func (w *Wallet) Update(id string) (*model.Wallet, error) {
+	var ww *model.Wallet
+	w.db.Model(model.Wallet{}).Where("user_id=?", id).Update("amount", gorm.Expr("amount + ?", 1000000))
+	w.db.Model(model.Wallet{}).Where("user_id=?", id).First(&ww)
+	return ww, nil
+}

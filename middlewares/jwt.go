@@ -18,6 +18,16 @@ var (
 	TokenInvalid     = errors.New("Couldn't handle this token:")
 )
 
+func GetUserId(c *gin.Context) string {
+	data, ok := c.Get(UserIdKey)
+	if !ok {
+		return ""
+	}
+	return data.(string)
+}
+
+const UserIdKey = `user_id`
+
 func JWTAuth() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// JWT 鉴权取头部信息 x-token 登录时回返回 token 信息

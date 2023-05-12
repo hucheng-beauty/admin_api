@@ -3,11 +3,12 @@ package router
 import (
 	"admin_api/internal/api/account"
 	"admin_api/internal/api/financial"
+	"admin_api/internal/api/marketing"
+	"admin_api/middlewares"
 	"net/http"
 
-	"admin_api/middlewares"
-
 	"github.com/gin-gonic/gin"
+	"github.com/maocatooo/thin/gin_handler"
 )
 
 var JWT = middlewares.JWTAuth
@@ -32,4 +33,11 @@ func Account(r *gin.Engine) {
 	g.PUT("/amount_create", JWT(), financial.CreateUserAmount)
 	g.GET("/user_amount", JWT(), financial.GetUserAmount)
 	//	g.GET("/user_trade", JWT(), financial.DescribeUserTrade)
+}
+
+func MarCampaign(r *gin.Engine) {
+	g := r.Group("/mar_campaigns", JWT())
+	var mcApi marketing.MarketingCampaignApi
+	g.POST("", gin_handler.JSON(mcApi.Create))
+	//g.GET("", gin_handler.Query(mcApi.List))
 }

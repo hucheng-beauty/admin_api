@@ -36,6 +36,7 @@ func (f Financial) GetUserAmount(c *gin.Context) {
 	return
 }
 
+// 创建用户钱包
 func (f Financial) CreateUserAmount(c *gin.Context) {
 	id, err := common.GetUserId(c)
 	if err != nil {
@@ -46,13 +47,27 @@ func (f Financial) CreateUserAmount(c *gin.Context) {
 	//初始化数据库
 	ws := account.NewWalletService(data.NewWalletService(global.DB))
 
-	resp, err := ws.CreateWallet(&model.Wallet{UserId: id, Amount: 9000})
+	todo, err := ws.CheckWalletUserId(id)
 	if err != nil {
 		c.JSON(http.StatusOK, response.Error(1, err.Error()))
 		return
 	}
+	if todo == true {
+		resp, err := ws.UpdateWallet(id)
+		if err != nil {
+			c.JSON(http.StatusOK, response.Error(1, err.Error()))
+			return
+		}
+		c.JSON(http.StatusOK, response.NewResponse(resp))
+	} else {
+		resp, err := ws.CreateWallet(&model.Wallet{UserId: id, Amount: 1000000000})
+		if err != nil {
+			c.JSON(http.StatusOK, response.Error(1, err.Error()))
+			return
+		}
+		c.JSON(http.StatusOK, response.NewResponse(resp))
+	}
 
-	c.JSON(http.StatusOK, response.NewResponse(resp))
 }
 
 //// DescribeUserTrade 获取账户下的交易流水

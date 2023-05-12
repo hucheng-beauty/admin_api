@@ -13,6 +13,8 @@ import (
 type WalletRepo interface {
 	Save(wallet *model.Wallet) (*model.Wallet, error)
 	Detail(wallet *model.Wallet) (*model.Wallet, error)
+	CheckId(id string) (bool, error)
+	Update(id string) (*model.Wallet, error)
 }
 
 type Wallet struct {
@@ -53,5 +55,14 @@ func (w *Wallet) CreateWallet(wallet *model.Wallet) (*response.GetAmountId, erro
 	if err != nil {
 		return nil, errors.New("用户钱包创建失败")
 	}
-	return &response.GetAmountId{Userid: ww.UserId}, err
+	return &response.GetAmountId{Userid: ww.Id}, err
+}
+
+func (w *Wallet) CheckWalletUserId(id string) (bool, error) {
+	return w.repo.CheckId(id)
+}
+
+func (w *Wallet) UpdateWallet(id string) (*response.GetAmountId, error) {
+	ww, err := w.repo.Update(id)
+	return &response.GetAmountId{Userid: ww.Id}, err
 }
