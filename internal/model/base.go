@@ -54,3 +54,8 @@ type BaseModel struct {
 	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`
 	IsDelete  bool           `gorm:"is_delete"`
 }
+
+type Pagination struct {
+	Offset int
+	Limit  int
+}

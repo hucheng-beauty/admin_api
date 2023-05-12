@@ -32,15 +32,16 @@ func NewResponse(data interface{}) *Response {
 
 type Pagination struct {
 	TotalCount int `json:"total_count"`
-	Offset     int `json:"offset"`
-	Limit      int `json:"limit"`
+	//	Offset     int `json:"offset"`
+	//	Limit      int `json:"limit"`
 }
 
-func NewPagination(total, offset, limit int) *Pagination {
+// func NewPagination(total, offset, limit int) *Pagination
+func NewPagination(total int) *Pagination {
 	return &Pagination{
 		TotalCount: total,
-		Offset:     offset,
-		Limit:      limit,
+		//Offset:     offset,
+		//Limit:      limit,
 	}
 }
 

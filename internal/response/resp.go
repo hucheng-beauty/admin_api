@@ -77,3 +77,14 @@ func (d *DescribeUserTrade) ModelToResp(trade *model.Trade) *DescribeUserTrade {
 	c.CreatedAt = trade.CreatedAt.Local().Format("2006-01-02 15:04:05")
 	return c
 }
+
+type DescribeSendRecord struct {
+	Id                string `json:"id"`
+	CampaignId        string `json:"campaign_id"`
+	CampaignName      string `json:"campaign_name"`
+	SurplusCount      int    `json:"surplus_count"`
+	TotalCount        int    `json:"count"` // the front end is difficult to communicate
+	TotalSuccessCount int    `json:"success_count"`
+	TotalFailCount    int    `json:"fail_count"`
+	CreatedAt         string `json:"created_at"`
+}

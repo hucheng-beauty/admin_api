@@ -43,4 +43,12 @@ func MarCampaign(r *gin.Engine) {
 
 	g.GET("/:id", gin_handler.Query(mcApi.Detail))
 	g.PUT("/:id/state", gin_handler.JSON(mcApi.UpdateState))
+
+	var sendRecord marketing.SendRecord
+	g.POST("/send_record/upload", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"data": "upload",
+		})
+	})
+	g.GET("/record", sendRecord.DescribeSendRecord)
 }

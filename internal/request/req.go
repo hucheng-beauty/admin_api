@@ -49,3 +49,7 @@ type DescribeUserTrade struct {
 type FilterString struct {
 	Filter string `json:"filter"`
 }
+
+type DescribeSendRecord struct {
+	Pagination
+}
