@@ -111,3 +111,7 @@ type UpdateSendRecord struct {
 	TotalSuccessCount   int                `json:"total_success_count"`
 	StockSendRecordInfo []*StockSendRecord `json:"stock_send_record_info"`
 }
+
+type GetSendRecordDetail struct {
+	Id string `json:"id"`
+}

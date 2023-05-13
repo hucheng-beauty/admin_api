@@ -14,6 +14,7 @@ type Repo interface {
 	ListWithPagination(*model.Pagination) ([]*model.SendRecord, int64, error)
 	Save(*model.SendRecord) (*model.SendRecord, error)
 	Update(*model.SendRecord) (*model.SendRecord, error)
+	Detail(id string) (*model.SendRecord, error)
 }
 
 type SendRecord struct {
@@ -113,5 +114,28 @@ func (sr *SendRecord) UpdateSendRecord(req *request.UpdateSendRecord) (*response
 		TotalCount:        record.TotalCount,
 		TotalSuccessCount: record.TotalSuccessCount,
 		CreatedAt:         record.CreatedAt.Local().Format("2006-01-02 15:04:05"),
+	}, nil
+}
+
+func (sr *SendRecord) GetSendRecordDetail(req *request.GetSendRecordDetail) (*response.GetSendRecordDetail, error) {
+	record, err := sr.repo.Detail(req.Id)
+	if err != nil {
+		zap.S().Errorf("%+#v\n", err)
+		return nil, errors.New("查询发送记录详情失败")
+	}
+
+	if record == nil {
+		return &response.GetSendRecordDetail{}, nil
+	}
+	return &response.GetSendRecordDetail{
+		Id:                record.Id,
+		CampaignId:        record.CampaignId,
+		CampaignName:      record.CampaignName,
+		SurplusCount:      record.SurplusCount,
+		TotalCount:        record.TotalCount,
+		TotalSuccessCount: record.TotalSuccessCount,
+		TotalFailCount:    record.TotalCount - record.TotalSuccessCount,
+		CreatedAt:         record.CreatedAt.Local().Format("2006-01-02 15:04:05"),
+		AccountIds:        record.AccountIds,
 	}, nil
 }

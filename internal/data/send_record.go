@@ -69,3 +69,15 @@ func (sr *sendRecordRepo) Update(record *model.SendRecord) (*model.SendRecord, e
 	}
 	return record, nil
 }
+
+func (sr *sendRecordRepo) Detail(id string) (*model.SendRecord, error) {
+	var record *model.SendRecord
+	tx := sr.db.Model(model.SendRecord{}).First(&record, "id = ?", id)
+	if tx.Error != nil {
+		if tx.Error == gorm.ErrRecordNotFound {
+			return nil, nil
+		}
+		return nil, errors.Wrap(tx.Error, "original error")
+	}
+	return record, nil
+}

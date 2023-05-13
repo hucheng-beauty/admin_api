@@ -139,3 +139,15 @@ type UpdateSendRecord struct {
 	TotalSuccessCount int    `json:"total_success_count"`
 	CreatedAt         string `json:"created_at"`
 }
+
+type GetSendRecordDetail struct {
+	Id                string   `json:"id"`
+	CampaignId        string   `json:"campaign_id"`
+	CampaignName      string   `json:"campaign_name"`
+	SurplusCount      int      `json:"surplus_count"`
+	TotalCount        int      `json:"count"` // the same
+	TotalSuccessCount int      `json:"success_count"`
+	TotalFailCount    int      `json:"fail_count"`
+	CreatedAt         string   `json:"created_at"`
+	AccountIds        []string `json:"account_ids"`
+}

@@ -52,4 +52,5 @@ func MarCampaign(r *gin.Engine) {
 	})
 	g.GET("/record", sendRecord.DescribeSendRecord)
 	g.POST("/:campaign_id/record", sendRecord.CreateSendRecord)
+	g.GET("/record/:id", sendRecord.GetSendRecordDetail)
 }

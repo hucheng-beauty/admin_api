@@ -230,3 +230,15 @@ func (SendRecord) CreateSendRecord(c *gin.Context) {
 	c.JSON(http.StatusOK, response.NewResponse(resp))
 	return
 }
+
+// GetSendRecordDetail 发送记录详情
+func (SendRecord) GetSendRecordDetail(c *gin.Context) {
+	srs := send_record_service.NewSendRecordService(data.NewSendRecordRepo(global.DB))
+	resp, err := srs.GetSendRecordDetail(&request.GetSendRecordDetail{Id: c.Param("id")})
+	if err != nil {
+		c.JSON(http.StatusOK, response.Error(1, err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, response.NewResponse(resp))
+	return
+}
