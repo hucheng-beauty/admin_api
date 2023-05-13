@@ -45,3 +45,27 @@ func (sr *sendRecordRepo) ListWithPagination(p *model.Pagination) ([]*model.Send
 	}
 	return records, total, nil
 }
+
+func (sr *sendRecordRepo) Save(record *model.SendRecord) (*model.SendRecord, error) {
+	r := sr.db.Create(&record)
+	if r.Error != nil {
+		return nil, errors.Wrap(r.Error, "original error")
+	}
+	return record, nil
+}
+
+func (sr *sendRecordRepo) Update(record *model.SendRecord) (*model.SendRecord, error) {
+	tx := sr.db.Model(model.SendRecord{})
+	if record.Id != "" {
+		tx = tx.Where("id = ?", record.Id)
+	}
+	if record.CampaignId != "" {
+		tx = tx.Where("campaign_id = ?", record.CampaignId)
+	}
+
+	tx = tx.Updates(&record)
+	if tx.Error != nil {
+		return nil, errors.Wrap(tx.Error, "original error")
+	}
+	return record, nil
+}

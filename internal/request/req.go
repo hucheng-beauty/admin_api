@@ -1,5 +1,7 @@
 package request
 
+import "time"
+
 // 创建用户
 type CreateUser struct {
 	Username      string `json:"username" binding:"required,email"`
@@ -52,4 +54,60 @@ type FilterString struct {
 
 type DescribeSendRecord struct {
 	Pagination
+}
+
+type CreateSendRecord struct {
+	AccountIds          []string          `json:"account_ids" binding:"required"`
+	CampaignId          string            `json:"campaign_id"`
+	CampaignName        string            `json:"campaign_name"`
+	StockSendRecordInfo []StockSendRecord `json:"stock_send_record_info"`
+	TotalCount          int               `json:"total_count"`
+}
+
+type StockSendRecord struct {
+	Count        int    `json:"count"`
+	SuccessCount int    `json:"success_count"`
+	StockId      string `json:"stock_id"`
+}
+
+type GetMarketingCampaignDetail struct {
+	Id string `json:"id"`
+}
+
+type DescribeCouponBatch struct {
+	MarketingCampaignId string `json:"marketing_campaign_id"`
+}
+
+type DescribeConsumer struct {
+	AccountIds []string `json:"account_id"`
+}
+
+type CreateCouponRecord struct {
+	ConsumerId   string `json:"consumer_id"`
+	CouponId     string `json:"coupon_id"`
+	StockId      string `json:"stock_id"`
+	StockName    string `json:"stock_name"`
+	CampaignId   string `json:"campaign_id"`
+	CampaignName string `json:"campaign_name"`
+	AccountId    string `json:"account_id"`
+	BelongTo     string `json:"belong_to"`
+}
+
+type CreateCoupon struct {
+	CouponId     string    `json:"coupon_id"`
+	CouponName   string    `json:"coupon_name"`
+	CouponType   string    `json:"coupon_type"`
+	CouponAmount int       `json:"coupon_amount"`
+	CreateTime   time.Time `json:"create_time"`
+	Description  string    `json:"description"`
+	Status       string    `json:"status"`
+}
+
+type UpdateSendRecord struct {
+	Id                  string             `json:"id"`
+	CampaignId          string             `json:"campaign_id"`
+	SurplusCount        int                `json:"surplus_count"`
+	TotalCount          int                `json:"total_count"`
+	TotalSuccessCount   int                `json:"total_success_count"`
+	StockSendRecordInfo []*StockSendRecord `json:"stock_send_record_info"`
 }

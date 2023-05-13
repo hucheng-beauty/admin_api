@@ -88,3 +88,54 @@ type DescribeSendRecord struct {
 	TotalFailCount    int    `json:"fail_count"`
 	CreatedAt         string `json:"created_at"`
 }
+
+type DescribeConsumer struct {
+	ConsumerId string `json:"consumer_id"`
+	AccountId  string `json:"account_id"`
+	OpenId     string `json:"open_id"`
+}
+
+type DescribeCouponBatch struct {
+	MarketingCampaignID string `json:"marketing_campaign_id"`
+	StockId             string `json:"stock_id"`
+	StockName           string `json:"stock_name"`
+	BelongTo            string `json:"belong_to"`
+}
+
+type GetMarketingCampaignDetail struct {
+	CampaignId          string `json:"campaign_id"`
+	CreatedAt           string `json:"created_at"`
+	UpdatedAt           string `json:"updated_at"`
+	AvailableBeginTime  string `json:"available_begin_time"`
+	AvailableEndTime    string `json:"available_end_time"`
+	CampaignName        string `json:"campaign_name"`
+	CouponBatchNumber   int64  `json:"coupon_batch_number"`
+	CouponNumber        int64  `json:"coupon_number"`
+	CouponSurplusNumber int64  `json:"coupon_surplus_number"`
+	FreezeAmount        int64  `json:"freeze_amount"`
+	MaxAmount           int64  `json:"max_amount"`
+	CampaignNu          string `json:"campaign_nu"`
+	State               string `json:"state"`
+}
+
+type CreateSendRecord struct {
+	Id string `json:"id"`
+}
+
+type CreateCouponRecord struct {
+	Id string `json:"id"`
+}
+
+type CreateCoupon struct {
+	Id       string `json:"id"`
+	CouponId string `json:"coupon_id"`
+}
+
+type UpdateSendRecord struct {
+	Id                string `json:"id"`
+	CampaignId        string `json:"campaign_id"`
+	CampaignName      string `json:"campaign_name"`
+	TotalCount        int    `json:"total_count"`
+	TotalSuccessCount int    `json:"total_success_count"`
+	CreatedAt         string `json:"created_at"`
+}

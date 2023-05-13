@@ -4,6 +4,7 @@ import (
 	"admin_api/internal/model"
 	"admin_api/internal/request"
 	"admin_api/utils"
+	"github.com/pkg/errors"
 	"gorm.io/gorm"
 )
 
@@ -51,4 +52,16 @@ func (d *marketingCampaignRepo) FilterWithPage(mr *model.MarketingCampaign, quer
 	err = d.db.Model(model.MarketingCampaign{}).Where(mr).Where(filter).Offset(query.Offset).Limit(query.Limit).Order("created_at desc").Find(&res).Error
 
 	return res, int(count), err
+}
+
+func (d *marketingCampaignRepo) GetById(id string) (*model.MarketingCampaign, error) {
+	var c *model.MarketingCampaign
+	tx := d.db.Model(model.MarketingCampaign{}).First(&c, "id = ?", id)
+	if tx.Error != nil {
+		if tx.Error == gorm.ErrRecordNotFound {
+			return nil, nil
+		}
+		return nil, errors.Wrap(tx.Error, "original error")
+	}
+	return c, nil
 }
