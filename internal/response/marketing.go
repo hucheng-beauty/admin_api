@@ -66,3 +66,25 @@ func (m *MarketingCampaignResponse) SetTradeModel2Resp(mc []*model.Trade) {
 		m.Trades = append(m.Trades, new(DescribeUserTrade).ModelToResp(item))
 	}
 }
+
+type CouponLogsResponse struct {
+	Data       []*CouponLogRsp `json:"data"`
+	TotalCount int             `json:"total_count"`
+}
+
+type CouponLogRsp struct {
+	AvailableBeginTime time.Time `json:"available_begin_time"`
+	AvailableEndTime   time.Time `json:"available_end_time"`
+	MerchantName       string    `json:"merchant_name"`
+	StockName          string    `json:"stock_name"`
+	CouponAmount       int       `json:"coupon_amount"`
+	TransactionMinimum int       `json:"transaction_minimum"`
+	Type               int       `json:"type"`
+	Platform           int       `json:"platform"`
+	LimitPay           int       `json:"limit_pay"`
+	MaxAmount          int       `json:"max_amount"`
+	MaxCoupons         int       `json:"max_coupons"`
+	MaxCouponsPerUser  int       `json:"max_coupons_per_user"`
+	State              int       `json:"state"`
+	CreatedAt          time.Time `json:"created_at"`
+}

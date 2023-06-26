@@ -8,3 +8,8 @@ type File struct {
 type UpdatePassword struct {
 	Id string `json:"id"`
 }
+
+type Cache struct {
+	Key   string `json:"key"`
+	Value string `json:"value"`
+}

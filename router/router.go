@@ -2,6 +2,8 @@ package router
 
 import (
 	"admin_api/internal/api/account"
+	"admin_api/internal/api/cache"
+	email "admin_api/internal/api/email"
 	"admin_api/internal/api/financial"
 	"admin_api/internal/api/marketing"
 	"admin_api/middlewares"
@@ -53,4 +55,28 @@ func MarCampaign(r *gin.Engine) {
 	g.GET("/record", sendRecord.DescribeSendRecord)
 	g.POST("/:campaign_id/record", sendRecord.CreateSendRecord)
 	g.GET("/record/:id", sendRecord.GetSendRecordDetail)
+
+	var cb marketing.CouponBatchApi
+	g.GET("/:id/coupon_logs", gin_handler.Query(cb.Logs))
+
+}
+
+func Email(r *gin.Engine) {
+	g := r.Group("/email", JWT())
+	var email email.EmailCampaignApi
+	//g.GET("/:email", gin_handler.Query(email.Crete))
+	g.POST("/test", email.Crete)
+	g.POST("/time", email.TimeSend)
+	g.POST("/cancel", email.CancelTimeSend)
+}
+
+func Cache(r *gin.Engine) {
+	g := r.Group("/cache")
+	var cache MyCache.Cache
+	g.POST("/set", cache.Crete)
+	g.POST("find", cache.Find)
+	g.GET("/ping", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{"code": 0, "msg": "pong"})
+	})
+
 }

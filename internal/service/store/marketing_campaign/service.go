@@ -31,6 +31,7 @@ type CouponTemplateRepo interface {
 type CouponLogRepo interface {
 	Create([]*model.CouponLog) error
 	List(*model.CouponLog) ([]*model.CouponLog, error)
+	ListWitPage(mrID string, query *request.Query) ([]*response.CouponLogRsp, int, error)
 }
 
 type MarCampaignLogRepo interface {

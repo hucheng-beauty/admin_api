@@ -2,6 +2,7 @@ package initialize
 
 import (
 	"admin_api/global"
+	"fmt"
 
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
@@ -27,5 +28,7 @@ func Config() {
 	if err := viper.Unmarshal(&global.ServerConfig); err != nil {
 		panic(err)
 	}
+
 	zap.S().Infof("server config info: %v", global.ServerConfig)
+	fmt.Println(global.ServerConfig)
 }

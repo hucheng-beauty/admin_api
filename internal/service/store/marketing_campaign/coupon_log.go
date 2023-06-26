@@ -1,6 +1,10 @@
 package marketing_campaign
 
-import "admin_api/internal/model"
+import (
+	"admin_api/internal/model"
+	"admin_api/internal/request"
+	"admin_api/internal/response"
+)
 
 func (s *MarCampaignService) CreateCouponLogWithMarCampaign(campaign *model.MarketingCampaign) error {
 	cbs, err := s.CouponBatchByMarId(campaign.Id)
@@ -52,4 +56,8 @@ func (s *MarCampaignService) CouponLogsByMarCampaignId2CouponBatchIdMap(marCampa
 
 func (s *MarCampaignService) CouponLogsByMarCampaignId(marCampaignId string) ([]*model.CouponLog, error) {
 	return s.clr.List(&model.CouponLog{MarketingCampaignId: marCampaignId})
+}
+
+func (s *MarCampaignService) ListWitPage(mrID string, query *request.Query) ([]*response.CouponLogRsp, int, error) {
+	return s.clr.ListWitPage(mrID, query)
 }

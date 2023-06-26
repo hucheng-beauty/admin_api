@@ -6,5 +6,14 @@ mysql_info:
   username: root
   password: 111111
   database: admin_api
+redis_info:
+    endpoint: 127.0.0.1:6379
+    password: ""
+    database: 0
 jwt:
   key: 9&!B1gycDA0IulqRC&kE
+email_info:
+  emailID: *********@163.com
+  password: **********
+  smtp_host: smtp.163.com
+  smtp_port: 25

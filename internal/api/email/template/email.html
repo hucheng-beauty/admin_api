@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>积分变动通知</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border: 5px solid #b3d7ff; /* 淡蓝色边框 */
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #333333;
+            margin: 0 0 20px; /* 修改为 0 0 20px，使标题下方有一定间距 */
+        }
+
+        table {
+            border-collapse: collapse;
+            margin-bottom: 20px; /* 将 margin 改为 margin-bottom，使表格与下方的段落之间有一定间距 */
+            width: 100%;
+            border: 1px solid #b3d7ff; /* 淡蓝色边框 */
+        }
+
+        td, th {
+            border: 1px solid #b3d7ff; /* 淡蓝色边框 */
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f1f1f1;
+            font-weight: normal; /* 将表头字体的粗细改为 normal */
+        }
+
+        .change {
+            font-weight: bold;
+        color: {{if eq .ChangeType "增加"}}green{{else}}red{{end}};
+        }
+
+        .contact {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .contact a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .contact a:hover {
+            text-decoration: underline;
+        }
+
+        /* 新增样式 */
+        .name, .activity, .points {
+            background-color: #cfe8c5; /* 淡绿色 */
+            font-weight: bold; /* 将这三列设置为粗体 */
+        }
+
+        .change {
+            background-color: #cfe8c5; /* 淡绿色 */
+            font-weight: bold; /* 将变动这一列和{{.ChangeType}}设置为粗体 */
+        color: {{if eq .ChangeType "增加"}}green{{else}}red{{end}};
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>尊敬的{{.Name}}，您的积分发生了变动</h1>
+    <p>
+        您的账户 {{.Id}} 参加了编号为 {{.ActivityId}} 的活动，您的积分变动如下：
+    </p>
+    <table>
+        <thead>
+        <tr>
+            <th class="name">姓名</th>
+            <th class="activity">活动</th>
+            <th class="change">变动</th>
+            <th class="points">剩余积分</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="name">{{.Name}}</td>
+            <td class="activity">{{.ActivityId}}</td>
+            <td class="change">{{.ChangeType}}</td>
+            <td class="points">{{.Points}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <p><strong>变动原因：</strong>{{.Reason}}</p>
+    <div class="contact">
+        <p>如有疑问，请联系我们：</p>
+        <p><a href="tel:400-123-4567">400-123-4567</a></p>
+        <p><a href="mailto:info@example.com">info@example.com</a></p>
+    </div>
+</div>
+</body>
+</html>

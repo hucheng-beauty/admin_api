@@ -17,5 +17,7 @@ func Routers() *gin.Engine {
 	router.HealthCheck(Router)
 	router.Account(Router)
 	router.MarCampaign(Router)
+	router.Email(Router)
+	router.Cache(Router)
 	return Router
 }
