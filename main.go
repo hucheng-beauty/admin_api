@@ -1,16 +1,14 @@
 package main
 
 import (
+	"admin_api/global"
+	"admin_api/initialize"
 	"fmt"
+	"go.uber.org/zap"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
-
-	"admin_api/global"
-	"admin_api/initialize"
-
-	"go.uber.org/zap"
 )
 
 func main() {
