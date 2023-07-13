@@ -29,8 +29,8 @@ func main() {
 	<-quit
 	zap.S().Info("3s 后关闭服务。。。")
 	time.Sleep(3 * time.Second)
-}
 
-//测试merge
-//
-//、??？？
+	//测试merge
+	//
+	//、??？？
+}
